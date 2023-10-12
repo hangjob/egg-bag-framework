@@ -1,0 +1,10 @@
+{
+    "extends": "eslint-config-egg",
+    "rules": {
+        "indent": [
+            "error",
+            4
+        ],
+        "no-unused-vars": "off"
+    }
+}
