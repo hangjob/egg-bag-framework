@@ -1,28 +1,22 @@
 # egg-bag-framework
 
+该框架，面向于企业中的后端程序，代码下载下来后，自行更改mysql、redis配置
 
-
-## QuickStart
+## 开始
 
 ```bash
 $ npm install
-$ npm test
 ```
 
-publish your framework to npm, then change app's framework config:
+## 创建软连接
 
-```js
-// {app_root}/index.js
-{
-  "name": "egg-showcase",
-  "egg": {
-    "framework": "yadan"
-  }
-}
+```bash
+$ npm link
+$ npm link egg-bag-framework // 应用目录
 ```
 
-## Questions & Suggestions
+### 帮助文档
 
-Please open an issue [here](https://github.com/eggjs/egg/issues).
-
+https://juejin.cn/post/7288178532862083112
 https://www.kancloud.cn/han88829/book/2025973
+
