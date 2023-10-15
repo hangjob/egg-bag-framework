@@ -1,5 +1,13 @@
 'use strict';
 
+const I18n = require('i18n');
+
+I18n.configure({
+    locales: [ 'zh-CN' ],
+    defaultLocale: 'zh-CN',
+    directory: __dirname + '/locale',
+});
+
 module.exports = appInfo => {
     const config = {};
 
@@ -47,6 +55,24 @@ module.exports = appInfo => {
         csrf: {
             enable: false,
         },
+    };
+
+    config.validate = {
+        convert: true,
+        translate() {
+            const args = Array.prototype.slice.call(arguments);
+            return I18n.__.apply(I18n, args);
+        },
+    };
+
+    config.i18n = {
+        defaultLocale: 'zh-CN',
+        queryField: 'locale',
+        cookieField: 'locale',
+        // Cookie 的 domain 配置，默认为空，代表当前域名有效
+        cookieDomain: '',
+        // Cookie 默认 `1y` 一年后过期， 如果设置为 Number，则单位为 ms
+        cookieMaxAge: '1y',
     };
     return config;
 };

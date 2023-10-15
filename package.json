@@ -19,9 +19,12 @@
     "autod-egg": "^1",
     "egg-bin": "^5",
     "egg-ci": "^2",
+    "egg-i18n": "^2.1.1",
     "egg-mock": "^5",
+    "egg-validate": "^2.0.2",
     "eslint": "^8",
-    "eslint-config-egg": "^8.0.0"
+    "eslint-config-egg": "^8.0.0",
+    "i18n": "^0.15.1"
   },
   "engines": {
     "node": ">=12.0.0"
