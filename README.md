@@ -20,3 +20,5 @@ $ npm link egg-bag-framework // 应用目录
 https://juejin.cn/post/7288178532862083112
 https://www.kancloud.cn/han88829/book/2025973
 
+### 数据库
+https://blog.csdn.net/ab15176142633/article/details/120064660

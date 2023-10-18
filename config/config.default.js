@@ -38,7 +38,7 @@ module.exports = appInfo => {
         agent: false,
     };
     config.jwt = {
-        secret: 'ABCDQWER123YSUNXSJL', // 可以自定义
+        secret: 'ABCD20231017QWERYSUNXSJL', // 可以自定义
         sign: {
             expiresIn: 30, // 过期时间8小时
         },

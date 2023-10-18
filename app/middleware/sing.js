@@ -4,8 +4,8 @@ const expireTime = 120;
 module.exports = (option, app) => {
     return async function sing(ctx, next) {
         const sing = ctx.request.header.sing;
-        const getSing = await app.redis.get(sing);
         if (sing) {
+            const getSing = await app.redis.get(sing);
             if (getSing) {
                 ctx.body = ctx.resultData({ msg: 'token过期' });
             } else {
