@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const JSEncrypt = require('node-jsencrypt');
 const CryptoJS = require('crypto-js');
-const dayjs = require('dayjs')
+const dayjs = require('dayjs');
 
 const { customAlphabet } = require('nanoid');
 
