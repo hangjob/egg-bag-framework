@@ -4,8 +4,17 @@ const Service = require('egg').Service;
 
 
 class BaseService extends Service {
-    // 分页查询
+    // 获取所有数据
     async list(modelName, { params } = {}) {
+        try {
+            return await this.app.model[modelName].findAll(params);
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
+
+    // 分页查询
+    async page(modelName, { params } = {}) {
         try {
             const { page = 1, limit = 10 } = this.ctx.request.body;
             const offset = (page - 1) * limit;
@@ -14,7 +23,7 @@ class BaseService extends Service {
                 limit,
                 offset,
             }, params);
-            return await this.app.model[modelName].findAll(options);
+            return await this.app.model[modelName].findAndCountAll(options);
         } catch (err) {
             throw new Error(err);
         }

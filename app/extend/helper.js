@@ -11,7 +11,7 @@ const alphabet = Array.from(new Array(26), (ele, idx) => {
     return String.fromCharCode(65 + idx) + idx;
 });
 
-const nanoid = customAlphabet(alphabet.join(''), 30);
+const nanoid = customAlphabet(alphabet.join(''), 12);
 
 const _default = {
     key: '2021062310041005', // 默认key
@@ -27,7 +27,7 @@ module.exports = {
         return this.app.jwt.verify(token, this.app.config.jwt.secret); // 验证token
     },
     nanoid() {
-        return dayjs().format('YYYYMMDD') + nanoid(); // 获取64位不重复随机ID
+        return nanoid(); // 获取64位不重复随机ID
     },
     aesEncrypt(data) {
         let str = data;
