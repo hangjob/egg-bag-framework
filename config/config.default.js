@@ -40,7 +40,7 @@ module.exports = appInfo => {
     config.jwt = {
         secret: 'ABCD20231017QWERYSUNXSJL', // 可以自定义
         sign: {
-            expiresIn: 30, // 过期时间8小时
+            expiresIn: 8 * 60 * 60, // 过期时间8小时
         },
     };
     config.redis = {

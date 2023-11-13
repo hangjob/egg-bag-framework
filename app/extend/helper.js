@@ -11,8 +11,6 @@ const alphabet = Array.from(new Array(26), (ele, idx) => {
     return String.fromCharCode(65 + idx) + idx;
 });
 
-const nanoid = customAlphabet(alphabet.join(''), 12);
-
 const _default = {
     key: '2021062310041005', // 默认key
     iv: '2021062310041005', // 默认偏移量
@@ -26,8 +24,20 @@ module.exports = {
     verifyToken(token) {
         return this.app.jwt.verify(token, this.app.config.jwt.secret); // 验证token
     },
-    nanoid() {
-        return nanoid(); // 获取64位不重复随机ID
+    nanoid(size = 12) {
+        const nanoid = customAlphabet(alphabet.join(''), size);
+        if (size >= 12) {
+            return dayjs().format('YYYYMMDD') + nanoid(); // 获取不重复随机ID
+        }
+        return nanoid(); // 获取重复随机ID
+
+    },
+    md5(data) {
+        let str = data;
+        if (typeof data === 'object') {
+            str = JSON.stringify(data);
+        }
+        return CryptoJS.MD5(str).toString();
     },
     aesEncrypt(data) {
         let str = data;
