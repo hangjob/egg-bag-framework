@@ -9,13 +9,22 @@ module.exports = (option, app) => {
             if (getSing) {
                 ctx.body = ctx.resultData({ msg: 'token过期' });
             } else {
-                const singData = JSON.parse(ctx.helper.aesDecrypt(sing));
-                if (singData.domain === domain) {
-                    ctx.body = ctx.resultData({ msg: 'sing签名不合法' });
+                const decSing = ctx.helper.aesDecrypt(sing);
+                if (decSing) {
+                    try {
+                        const singData = JSON.parse(decSing);
+                        if (singData.domain === domain) {
+                            await app.redis.set(sing, 1);
+                            await app.redis.expire(sing, expireTime);
+                            await next();
+                        } else {
+                            ctx.body = ctx.resultData({ msg: 'sing签名不合法' });
+                        }
+                    } catch (e) {
+                        ctx.body = ctx.resultData({ msg: 'sing签名不合法' });
+                    }
                 } else {
-                    await app.redis.set(sing, 1);
-                    await app.redis.expire(sing, expireTime);
-                    await next();
+                    ctx.body = ctx.resultData({ msg: 'sing签名不合法' });
                 }
             }
         } else {

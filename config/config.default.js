@@ -35,7 +35,7 @@ module.exports = appInfo => {
     config.mysql = deepMerge({
         client: {
             // host
-            host: '172.16.14.191',
+            host: '127.0.0.1',
             // 端口号
             port: '3306',
             // 用户名
@@ -61,7 +61,7 @@ module.exports = appInfo => {
     config.redis = deepMerge({
         client: {
             port: 6379,
-            host: '172.16.14.191',
+            host: '127.0.0.1',
             password: 'auth',
             db: 0,
         },
@@ -90,7 +90,7 @@ module.exports = appInfo => {
     config.sequelize = deepMerge({
         dialect: 'mysql',
         database: 'vip_itnavs',
-        host: '172.16.14.191',
+        host: '127.0.0.1',
         port: '3306',
         username: 'vip_itnavs',
         password: '123456',
