@@ -1,6 +1,8 @@
 'use strict';
 
 const I18n = require('i18n');
+const fs = require('fs');
+const path = require('path');
 
 I18n.configure({
     locales: [ 'zh-CN' ],
@@ -24,14 +26,17 @@ function deepMerge(obj1, obj2) {
 
 module.exports = appInfo => {
     const config = {};
-    /**
-     * some description
-     * @member Config#test
-     * @property {String} key - some description
-     */
-    config.test = {
-        key: appInfo.name + '_123456',
-    };
+    const publicKey = fs.readFileSync(path.join(__dirname, 'rsa_public_key.pem'));
+    const privateKey = fs.readFileSync(path.join(__dirname, 'rsa_private_key.pem'));
+    config.website = deepMerge({
+        domain: 'itnavs',
+        expireTime: 120,
+        key: '2021062310041005',
+        iv: '2021062310041005',
+        publicKey,
+        privateKey,
+    }); // 应用配置
+
     config.mysql = deepMerge({
         client: {
             // host
@@ -39,24 +44,17 @@ module.exports = appInfo => {
             // 端口号
             port: '3306',
             // 用户名
-            user: 'vip_itnavs',
+            user: 'pm_webleading',
             // 密码
             password: '123456',
             // 数据库名
-            database: 'vip_itnavs',
+            database: 'pm_webleading',
         },
         // 是否加载到 app 上，默认开启
         app: true,
         // 是否加载到 agent 上，默认关闭
         agent: false,
-    }, appInfo?.bag?.mysql); // bag配置应用
-
-    config.jwt = deepMerge({
-        secret: 'ABCD20231017QWERYSUNXSJL', // 可以自定义
-        sign: {
-            expiresIn: 8 * 60 * 60, // 过期时间8小时
-        },
-    }, appInfo?.bag?.jwt); // bag配置应用
+    }, appInfo?.bag?.mysql);
 
     config.redis = deepMerge({
         client: {
@@ -66,11 +64,35 @@ module.exports = appInfo => {
             db: 0,
         },
     }, appInfo?.bag?.redis);
+
+    config.sequelize = deepMerge({
+        dialect: 'mysql',
+        database: 'pm_webleading',
+        host: '127.0.0.1',
+        port: '3306',
+        username: 'pm_webleading',
+        password: '123456',
+        underscored: false,
+        timezone: '+08:00',
+        define: {
+            timestamps: true,
+            freezeTableName: true,
+        },
+    }, appInfo?.bag?.sequelize);
+
+    config.jwt = deepMerge({
+        secret: 'ABCD20231017QWERYSUNXSJL', // 可以自定义
+        sign: {
+            expiresIn: 8 * 60 * 60, // 过期时间8小时
+        },
+    }, appInfo?.bag?.jwt);
+
     config.security = {
         csrf: {
             enable: false,
         },
     };
+
     config.validate = {
         convert: true,
         translate() {
@@ -78,6 +100,7 @@ module.exports = appInfo => {
             return I18n.__.apply(I18n, args);
         },
     };
+
     config.i18n = {
         defaultLocale: 'zh-CN',
         queryField: 'locale',
@@ -87,20 +110,7 @@ module.exports = appInfo => {
         // Cookie 默认 `1y` 一年后过期， 如果设置为 Number，则单位为 ms
         cookieMaxAge: '1y',
     };
-    config.sequelize = deepMerge({
-        dialect: 'mysql',
-        database: 'vip_itnavs',
-        host: '127.0.0.1',
-        port: '3306',
-        username: 'vip_itnavs',
-        password: '123456',
-        underscored: false,
-        timezone: '+08:00',
-        define: {
-            timestamps: true,
-            freezeTableName: true,
-        },
-    }, appInfo?.bag?.sequelize);
+
     config.multipart = deepMerge({
         mode: 'file',
         fileSize: '3mb', // 接收文件大小
@@ -111,5 +121,6 @@ module.exports = appInfo => {
             '.gif',
         ],
     }, appInfo?.bag?.multipart);
+
     return config;
 };

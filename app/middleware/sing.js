@@ -1,29 +1,25 @@
 'use strict';
-const domain = 'itnvas';
-const expireTime = 120;
 module.exports = (option, app) => {
     return async function sing(ctx, next) {
         const sing = ctx.request.header.sing;
+        const { domain, expireTime } = ctx.app.config.website;
         if (sing) {
             const getSing = await app.redis.get(sing);
             if (getSing) {
-                ctx.body = ctx.resultData({ msg: 'token过期' });
+                // 在redis中存在说明既过期
+                ctx.body = ctx.resultData({ msg: 'sing签名已过期' });
             } else {
-                const decSing = ctx.helper.aesDecrypt(sing);
-                if (decSing) {
-                    try {
-                        const singData = JSON.parse(decSing);
-                        if (singData.domain === domain) {
-                            await app.redis.set(sing, 1);
-                            await app.redis.expire(sing, expireTime);
-                            await next();
-                        } else {
-                            ctx.body = ctx.resultData({ msg: 'sing签名不合法' });
-                        }
-                    } catch (e) {
-                        ctx.body = ctx.resultData({ msg: 'sing签名不合法' });
+                try {
+                    const decSing = ctx.helper.aesDecrypt(sing);
+                    const singData = JSON.parse(decSing);
+                    if (singData.domain === domain) {
+                        await app.redis.set(sing, 1);
+                        await app.redis.expire(sing, expireTime);
+                        await next();
+                    } else {
+                        ctx.body = ctx.resultData({ msg: 'sing签名不合法,缺少字符串' });
                     }
-                } else {
+                } catch (e) {
                     ctx.body = ctx.resultData({ msg: 'sing签名不合法' });
                 }
             }
