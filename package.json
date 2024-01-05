@@ -1,76 +1,78 @@
 {
-  "name": "egg-bag-framework",
-  "version": "1.0.4",
-  "description": "",
-  "dependencies": {
-    "crypto": "^1.0.1",
-    "crypto-js": "^4.1.1",
-    "dayjs": "^1.11.10",
-    "egg": "^3",
-    "egg-jwt": "^3.1.7",
-    "egg-mysql": "^4.0.0",
-    "egg-redis": "^2.5.0",
-    "egg-sequelize": "^6.0.0",
-    "module-alias": "^2.2.3",
-    "mysql2": "^3.6.1",
-    "nanoid": "^3.3.6",
-    "node-jsencrypt": "^1.0.0"
-  },
-  "devDependencies": {
-    "autod": "^3",
-    "autod-egg": "^1",
-    "egg-bin": "^5",
-    "egg-ci": "^2",
-    "egg-i18n": "^2.1.1",
-    "egg-mock": "^5",
-    "egg-validate": "^2.0.2",
-    "eslint": "^8",
-    "eslint-config-egg": "^8.0.0",
-    "i18n": "^0.15.1"
-  },
-  "engines": {
-    "node": ">=12.0.0"
-  },
-  "scripts": {
-    "test": "npm run lint -- --fix && egg-bin pkgfiles && npm run test-local",
-    "test-local": "egg-bin test",
-    "cov": "egg-bin cov",
-    "lint": "eslint . --resolve-plugins-relative-to .",
-    "ci": "npm run lint && egg-bin pkgfiles --check && npm run cov",
-    "autod": "autod",
-    "pkgfiles": "egg-bin pkgfiles",
-    "preinstall": "npx only-allow pnpm",
-    "publish:patch": "npm version patch && npm publish",
-    "publish:minor": "npm version minor && npm publish"
-  },
-  "ci": {
-    "version": "12",
-    "type": "github"
-  },
-  "keywords": [
-    "bag",
-    "bag-admin",
-    "egg",
-    "egg-framework"
-  ],
-  "author": {
-    "name": "yanghang",
-    "email": "470193837@qq.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/hangjob/egg-bag-framework"
-  },
-  "files": [
-    "index.js",
-    "lib",
-    "app",
-    "config",
-    "app.js"
-  ],
-  "eslintIgnore": [
-    "coverage",
-    "dist"
-  ],
-  "license": "MIT"
+    "name": "egg-bag-framework",
+    "version": "1.0.4",
+    "description": "",
+    "dependencies": {
+        "crypto": "^1.0.1",
+        "crypto-js": "^4.1.1",
+        "dayjs": "^1.11.10",
+        "egg": "^3",
+        "egg-jwt": "^3.1.7",
+        "egg-mysql": "^4.0.0",
+        "egg-redis": "^2.5.0",
+        "egg-sequelize": "^6.0.0",
+        "jimp": "^0.22.10",
+        "module-alias": "^2.2.3",
+        "mysql2": "^3.6.1",
+        "nanoid": "^3.3.6",
+        "node-jsencrypt": "^1.0.0",
+        "rate-limiter-flexible": "^4.0.0"
+    },
+    "devDependencies": {
+        "autod": "^3",
+        "autod-egg": "^1",
+        "egg-bin": "^5",
+        "egg-ci": "^2",
+        "egg-i18n": "^2.1.1",
+        "egg-mock": "^5",
+        "egg-validate": "^2.0.2",
+        "eslint": "^8",
+        "eslint-config-egg": "^8.0.0",
+        "i18n": "^0.15.1"
+    },
+    "engines": {
+        "node": ">=12.0.0"
+    },
+    "scripts": {
+        "test": "npm run lint -- --fix && egg-bin pkgfiles && npm run test-local",
+        "test-local": "egg-bin test",
+        "cov": "egg-bin cov",
+        "lint": "eslint . --resolve-plugins-relative-to .",
+        "ci": "npm run lint && egg-bin pkgfiles --check && npm run cov",
+        "autod": "autod",
+        "pkgfiles": "egg-bin pkgfiles",
+        "preinstall": "npx only-allow pnpm",
+        "publish:patch": "npm version patch && npm publish",
+        "publish:minor": "npm version minor && npm publish"
+    },
+    "ci": {
+        "version": "12",
+        "type": "github"
+    },
+    "keywords": [
+        "bag",
+        "bag-admin",
+        "egg",
+        "egg-framework"
+    ],
+    "author": {
+        "name": "yanghang",
+        "email": "470193837@qq.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/hangjob/egg-bag-framework"
+    },
+    "files": [
+        "index.js",
+        "lib",
+        "app",
+        "config",
+        "app.js"
+    ],
+    "eslintIgnore": [
+        "coverage",
+        "dist"
+    ],
+    "license": "MIT"
 }

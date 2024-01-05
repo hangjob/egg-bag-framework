@@ -1,5 +1,4 @@
 'use strict';
-
 module.exports = {
     resultData(data = {}) {
         const res = Object.assign({ msg: '请求成功', code: 1, data: null }, data);

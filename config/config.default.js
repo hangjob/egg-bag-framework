@@ -113,12 +113,18 @@ module.exports = appInfo => {
 
     config.multipart = deepMerge({
         mode: 'file',
-        fileSize: '3mb', // 接收文件大小
+        fileSize: '100mb', // 接收文件大小
         whitelist: [ // 允许接收的文件类型
             '.png',
             '.jpg',
             '.webp',
             '.gif',
+            '.zip',
+            '.doc',
+            '.docx',
+            '.txt',
+            '.xlsx',
+            '.pdf',
         ],
     }, appInfo?.bag?.multipart);
 

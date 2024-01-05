@@ -4,6 +4,8 @@ const CryptoJS = require('crypto-js');
 const dayjs = require('dayjs');
 
 const { customAlphabet } = require('nanoid');
+const Jimp = require('jimp');
+const path = require('path');
 
 const alphabet = Array.from(new Array(26), (ele, idx) => {
     return String.fromCharCode(65 + idx) + idx;
@@ -68,4 +70,19 @@ module.exports = {
         decrypted.setPrivateKey(options.privateKey.toString()); // 设置私钥
         return decrypted.decrypt(str); // 非对称解密内容
     },
+    uploadLocalImage({ file, filePath, width = 500, quality = 75 }) {
+        const { ctx } = this;
+        const _filePath = filePath || `public/image/${ctx.helper.nanoid()}.png`;
+        const localPath = path.join(ctx.app.baseDir, 'app', _filePath);
+        return new Promise((resolve, reject) => {
+            Jimp.read(file.filepath)
+                .then(image => {
+                    image.resize(500, Jimp.AUTO).quality(quality).write(localPath);
+                    resolve(_filePath);
+                })
+                .catch(err => {
+                    reject(err);
+                });
+        });
+    }, // 上传图片到本地
 };
