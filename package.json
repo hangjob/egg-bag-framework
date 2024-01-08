@@ -1,6 +1,6 @@
 {
     "name": "egg-bag-framework",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "",
     "dependencies": {
         "crypto": "^1.0.1",
