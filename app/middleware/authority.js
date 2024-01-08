@@ -5,7 +5,7 @@ module.exports = () => {
         const authorization = ctx.request.header.authorization;
         if (authorization) {
             try {
-                ctx.helper.verifyToken(authorization);
+                ctx.helper.verifyToken(authorization); // 验证jwt
                 await next();
             } catch (err) {
                 ctx.body = ctx.resultData({ msg: 'access_token过期', code: 1003 });

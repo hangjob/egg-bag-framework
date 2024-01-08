@@ -2,6 +2,8 @@
 
 // app.js
 module.exports = app => {
-    // 在中间件最前面统计请求时间
-    // app.config.coreMiddleware.unshift('sing');
+    // 是否开启验证接口-sing 默认关闭
+    if (app.config.website.verifySing) {
+        app.config.coreMiddleware.unshift('sing');
+    }
 };

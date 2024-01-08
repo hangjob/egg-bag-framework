@@ -28,16 +28,18 @@ module.exports = appInfo => {
     const config = {};
     const publicKey = fs.readFileSync(path.join(__dirname, 'rsa_public_key.pem'));
     const privateKey = fs.readFileSync(path.join(__dirname, 'rsa_private_key.pem'));
-    config.website = deepMerge({
+    config.website = {
         domain: 'itnavs',
         expireTime: 120,
         key: '2021062310041005',
         iv: '2021062310041005',
         publicKey,
         privateKey,
-    }); // 应用配置
+        cache: 'lru', // 可选值 redis lru(默认)
+        verifySing: false, // 网站是否验证sing签名
+    }; // 应用配置
 
-    config.mysql = deepMerge({
+    config.mysql = {
         client: {
             // host
             host: '127.0.0.1',
@@ -54,18 +56,9 @@ module.exports = appInfo => {
         app: true,
         // 是否加载到 agent 上，默认关闭
         agent: false,
-    }, appInfo?.bag?.mysql);
+    };
 
-    config.redis = deepMerge({
-        client: {
-            port: 6379,
-            host: '127.0.0.1',
-            password: 'auth',
-            db: 0,
-        },
-    }, appInfo?.bag?.redis);
-
-    config.sequelize = deepMerge({
+    config.sequelize = {
         dialect: 'mysql',
         database: 'pm_webleading',
         host: '127.0.0.1',
@@ -78,14 +71,14 @@ module.exports = appInfo => {
             timestamps: true,
             freezeTableName: true,
         },
-    }, appInfo?.bag?.sequelize);
+    };
 
-    config.jwt = deepMerge({
+    config.jwt = {
         secret: 'ABCD20231017QWERYSUNXSJL', // 可以自定义
         sign: {
             expiresIn: 8 * 60 * 60, // 过期时间8小时
         },
-    }, appInfo?.bag?.jwt);
+    };
 
     config.security = {
         csrf: {
@@ -101,6 +94,15 @@ module.exports = appInfo => {
         },
     };
 
+    config.lru = {
+        client: {
+            max: 3000, // 所有lru缓存配置可用
+            maxAge: 1000 * 60 * 30, // 60 min cache
+        },
+        app: true, // 加载到app中，默认是打开的
+        agent: false, // 加载到代理中，默认为关闭
+    };
+
     config.i18n = {
         defaultLocale: 'zh-CN',
         queryField: 'locale',
@@ -111,9 +113,9 @@ module.exports = appInfo => {
         cookieMaxAge: '1y',
     };
 
-    config.multipart = deepMerge({
+    config.multipart = {
         mode: 'file',
-        fileSize: '100mb', // 接收文件大小
+        fileSize: '50mb', // 接收文件大小
         whitelist: [ // 允许接收的文件类型
             '.png',
             '.jpg',
@@ -125,8 +127,20 @@ module.exports = appInfo => {
             '.txt',
             '.xlsx',
             '.pdf',
+            '.mp4',
+            '.webm',
+            '.mov',
+            '.flv',
+            '.avi',
+            '.f4v',
+            '.mov',
+            '.m4v',
+            '.rmvb',
+            '.rm',
+            '.mpg',
+            '.mpeg',
         ],
-    }, appInfo?.bag?.multipart);
-
+    };
+    appInfo.bag = { ...config };
     return config;
 };

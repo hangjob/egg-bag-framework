@@ -6,6 +6,8 @@ const dayjs = require('dayjs');
 const { customAlphabet } = require('nanoid');
 const Jimp = require('jimp');
 const path = require('path');
+const fs = require('mz/fs');
+const pump = require('mz-modules/pump');
 
 const alphabet = Array.from(new Array(26), (ele, idx) => {
     return String.fromCharCode(65 + idx) + idx;
@@ -72,12 +74,15 @@ module.exports = {
     },
     uploadLocalImage({ file, filePath, width = 500, quality = 75 }) {
         const { ctx } = this;
-        const _filePath = filePath || `public/image/${ctx.helper.nanoid()}.png`;
+        const extname = path.extname(file.filename);
+        const _filePath = filePath || `public/image/${ctx.helper.nanoid()}${extname}`;
         const localPath = path.join(ctx.app.baseDir, 'app', _filePath);
         return new Promise((resolve, reject) => {
             Jimp.read(file.filepath)
                 .then(image => {
-                    image.resize(500, Jimp.AUTO).quality(quality).write(localPath);
+                    image.resize(width, Jimp.AUTO)
+                        .quality(quality)
+                        .write(localPath);
                     resolve(_filePath);
                 })
                 .catch(err => {
@@ -85,4 +90,23 @@ module.exports = {
                 });
         });
     }, // 上传图片到本地
+    uploadLocaFile({ file, filePath }) {
+        const { ctx } = this;
+        return new Promise(async (resolve, reject) => {
+            try {
+                const filename = file.filename;
+                const extname = path.extname(filename);
+                const _filePath = filePath || `public/upload/${ctx.helper.nanoid()}${extname}`;
+                const localPath = path.join(ctx.app.baseDir, 'app', _filePath);
+                // 读取文件
+                const source = fs.createReadStream(file.filepath);
+                // 创建写入流
+                const target = fs.createWriteStream(localPath);
+                await pump(source, target);
+                resolve(_filePath);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }, // 多文件上传本地
 };

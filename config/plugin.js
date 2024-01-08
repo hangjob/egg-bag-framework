@@ -25,3 +25,8 @@ exports.validate = {
     package: 'egg-validate',
 };
 
+exports.lru = {
+    enable: true,
+    package: 'egg-lru', // 本地缓存
+};
+

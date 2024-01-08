@@ -20,6 +20,9 @@ dependencies:
   egg-jwt:
     specifier: ^3.1.7
     version: 3.1.7
+  egg-lru:
+    specifier: ^1.0.1
+    version: 1.0.1
   egg-mysql:
     specifier: ^4.0.0
     version: 4.0.0
@@ -38,6 +41,12 @@ dependencies:
   mysql2:
     specifier: ^3.6.1
     version: 3.6.1
+  mz:
+    specifier: ^2.7.0
+    version: 2.7.0
+  mz-modules:
+    specifier: ^2.1.0
+    version: 2.1.0
   nanoid:
     specifier: ^3.3.6
     version: 3.3.6
@@ -3240,6 +3249,13 @@ packages:
       - supports-color
     dev: false
 
+  /egg-lru@1.0.1:
+    resolution: {integrity: sha512-kmquVCTb8c3dD1G6VWQ9emPOHSMX524qbshBM67+VxuQLlbvj+Z2W4EhfsXh3ZXSTGOuKTBar6+FPUuf6/UQDQ==}
+    engines: {node: '>=8.0.0'}
+    dependencies:
+      lru-cache: 4.1.5
+    dev: false
+
   /egg-mock@5.0.0:
     resolution: {integrity: sha512-J8FG5GruLSH9O/D3gtgwMkXfNXkTt8uqkKwyJXPOFvR/J9evm0352myjDNkwhIceH7xXl3LeJskDLqe54YEI6w==}
     engines: {node: '>= 14.17.0'}
@@ -5847,6 +5863,13 @@ packages:
       tslib: 2.6.2
     dev: true
 
+  /lru-cache@4.1.5:
+    resolution: {integrity: sha512-sWZlbEP2OsHNkXrMl5GYk/jKk70MBng6UU4YI/qGDYbgf6YbP4EvmqISbXCoJiRKs+1bSpFHVgQxvJ17F2li5g==}
+    dependencies:
+      pseudomap: 1.0.2
+      yallist: 2.1.2
+    dev: false
+
   /lru-cache@6.0.0:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
     engines: {node: '>=10'}
@@ -6867,6 +6890,10 @@ packages:
     hasBin: true
     dependencies:
       event-stream: 3.3.4
+    dev: false
+
+  /pseudomap@1.0.2:
+    resolution: {integrity: sha512-b/YwNhb8lk1Zz2+bXXpS/LK9OisiZZ1SNsSLxN1x2OXVEhW2Ckr/7mWE5vrC1ZTiJlD9g19jWszTmJsB+oEpFQ==}
     dev: false
 
   /pump@3.0.0:
@@ -8551,6 +8578,10 @@ packages:
     resolution: {integrity: sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA==}
     engines: {node: '>=10'}
     dev: true
+
+  /yallist@2.1.2:
+    resolution: {integrity: sha512-ncTzHV7NvsQZkYe1DW7cbDLm0YpzHmZF5r/iyP3ZnQtMiJ+pjzisCiMNI+Sj+xQF5pXhSHxSB3uDbsBTzY/c2A==}
+    dev: false
 
   /yallist@4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
