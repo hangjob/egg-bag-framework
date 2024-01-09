@@ -22,6 +22,7 @@ module.exports = appInfo => {
         publicKey,
         privateKey,
         cache: 'lru', // 可选值 redis lru(默认)
+        points: 12, // 接口ip每秒请求的次数
     }; // 应用配置
 
     config.mysql = {
