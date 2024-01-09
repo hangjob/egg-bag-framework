@@ -10,20 +10,6 @@ I18n.configure({
     directory: __dirname + '/locale',
 });
 
-function deepMerge(obj1, obj2) {
-    let key;
-    if (!obj2) {
-        return obj1;
-    }
-    for (key in obj2) {
-        // 如果target(也就是obj1[key])存在，且是对象的话再去调用deepMerge，否则就是obj1[key]里面没这个对象，需要与obj2[key]合并
-        // 如果obj2[key]没有值或者值不是对象，此时直接替换obj1[key]
-        obj1[key] = obj1[key] && obj1[key].toString() === '[object Object]' && (obj2[key] && obj2[key].toString() === '[object Object]') ? deepMerge(obj1[key], obj2[key]) : (obj1[key] = obj2[key]);
-    }
-    return obj1;
-}
-
-
 module.exports = appInfo => {
     const config = {};
     const publicKey = fs.readFileSync(path.join(__dirname, 'rsa_public_key.pem'));
@@ -36,7 +22,6 @@ module.exports = appInfo => {
         publicKey,
         privateKey,
         cache: 'lru', // 可选值 redis lru(默认)
-        verifySing: false, // 网站是否验证sing签名
     }; // 应用配置
 
     config.mysql = {

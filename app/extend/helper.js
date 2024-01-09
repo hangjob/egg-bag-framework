@@ -75,15 +75,15 @@ module.exports = {
     uploadLocalImage({ file, filePath, width = 500, quality = 75 }) {
         const { ctx } = this;
         const extname = path.extname(file.filename);
-        const _filePath = filePath || `public/image/${ctx.helper.nanoid()}${extname}`;
-        const localPath = path.join(ctx.app.baseDir, 'app', _filePath);
+        const _filePath = filePath || `${this.app.config.baseConfig.imageDir}`;
+        const localPath = path.join(_filePath, `${ctx.helper.nanoid()}${extname}`);
         return new Promise((resolve, reject) => {
             Jimp.read(file.filepath)
                 .then(image => {
                     image.resize(width, Jimp.AUTO)
                         .quality(quality)
                         .write(localPath);
-                    resolve(_filePath);
+                    resolve(localPath);
                 })
                 .catch(err => {
                     reject(err);
@@ -96,14 +96,14 @@ module.exports = {
             try {
                 const filename = file.filename;
                 const extname = path.extname(filename);
-                const _filePath = filePath || `public/upload/${ctx.helper.nanoid()}${extname}`;
-                const localPath = path.join(ctx.app.baseDir, 'app', _filePath);
+                const _filePath = filePath || `${this.app.config.baseConfig.uploaDir}`;
+                const localPath = path.join(_filePath, `${ctx.helper.nanoid()}${extname}`);
                 // 读取文件
                 const source = fs.createReadStream(file.filepath);
                 // 创建写入流
                 const target = fs.createWriteStream(localPath);
                 await pump(source, target);
-                resolve(_filePath);
+                resolve(localPath);
             } catch (err) {
                 reject(err);
             }
