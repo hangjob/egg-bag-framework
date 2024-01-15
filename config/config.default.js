@@ -14,6 +14,7 @@ module.exports = appInfo => {
     const config = {};
     const publicKey = fs.readFileSync(path.join(__dirname, 'rsa_public_key.pem'));
     const privateKey = fs.readFileSync(path.join(__dirname, 'rsa_private_key.pem'));
+
     config.website = {
         domain: 'itnavs',
         expireTime: 120,
